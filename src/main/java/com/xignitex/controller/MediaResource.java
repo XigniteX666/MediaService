@@ -1,5 +1,6 @@
 package com.xignitex.controller;
 
+import com.xignitex.model.InternalFile;
 import com.xignitex.usecase.UploadFile;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.POST;
@@ -14,7 +15,9 @@ public class MediaResource {
 
     @POST
     public String uploadFile(@RestQuery String fileName) {
-        return uploadFile.execute(fileName);
+        InternalFile file = new InternalFile();
+        file.setFileName(fileName);
+        return uploadFile.execute(file);
     }
 
 }
