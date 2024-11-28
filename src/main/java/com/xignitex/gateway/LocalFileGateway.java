@@ -1,5 +1,4 @@
-package com.xignitex.services;
-
+package com.xignitex.gateway;
 
 import com.xignitex.model.InternalFile;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -10,25 +9,24 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 
 @ApplicationScoped
-public class LocalFileService implements FileService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(LocalFileService.class);
+public class LocalFileGateway implements FileGateway {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(LocalFileGateway.class);
+    private static final String FILE_LOCATION = "src/main/resources/files/copiedFile.mp3";
 
     @Override
-    public void getFile(InternalFile file) throws Exception {
+    public File getFile(InternalFile file) throws Exception {
         LOGGER.info("Getting file {}", file.getFileName());
         File originalFile = new File(file.getFileName());
-        File copiedFile = new File("src/main/resources/files/copiedFile");
+        File copiedFile = new File(FILE_LOCATION);
 
         FileUtils.copyFile(originalFile, copiedFile);
+        return copiedFile;
     }
 
-    @Override
-    public void encodeFile(InternalFile path) {
-
-    }
 
     @Override
-    public void putFile(InternalFile path) {
+    public void putFile(InternalFile file) {
 
     }
 }

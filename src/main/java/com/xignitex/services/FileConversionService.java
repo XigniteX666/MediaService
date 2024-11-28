@@ -4,12 +4,8 @@ import com.xignitex.model.InternalFile;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public interface FileService {
-    void getFile(InternalFile file) throws Exception;
+public interface FileConversionService {
 
     void encodeFile(InternalFile file);
-
-    void putFile(InternalFile file);
-
 
 }
