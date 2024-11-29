@@ -2,7 +2,7 @@ package com.xignitex.model;
 
 
 //TODO: refactor the name File is not most logical
-public class InternalFile {
+public class FileDescription {
     private String path;
     private String fileName;
 

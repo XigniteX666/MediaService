@@ -1,7 +1,9 @@
 package com.xignitex.gateway;
 
-import com.xignitex.model.InternalFile;
+import com.xignitex.configuration.ApplicationConfig;
+import com.xignitex.model.FileDescription;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,22 +13,34 @@ import java.io.File;
 @ApplicationScoped
 public class LocalFileGateway implements FileGateway {
 
+    @Inject
+    ApplicationConfig config;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(LocalFileGateway.class);
-    private static final String FILE_LOCATION = "src/main/resources/files/copiedFile.mp3";
 
     @Override
-    public File getFile(InternalFile file) throws Exception {
-        LOGGER.info("Getting file {}", file.getFileName());
-        File originalFile = new File(file.getFileName());
-        File copiedFile = new File(FILE_LOCATION);
+    public FileDescription getFile(FileDescription file) throws Exception {
 
-        FileUtils.copyFile(originalFile, copiedFile);
-        return copiedFile;
+        LOGGER.info("Trying to get file {}", file.getPath() + "/" + file.getFileName());
+        try {
+            File originalFile = new File(file.getPath() + "/" + file.getFileName());
+            File copiedFile = new File(config.getFileLocationTemp() + file.getFileName());
+
+            FileUtils.copyFile(originalFile, copiedFile);
+
+            FileDescription outputFile = new FileDescription();
+            outputFile.setFileName(copiedFile.getName());
+            outputFile.setPath(copiedFile.getPath());
+
+            return outputFile;
+        } catch (Exception e) {
+            throw new Exception("Unable to get the file");
+        }
     }
 
 
     @Override
-    public void putFile(InternalFile file) {
+    public void putFile(FileDescription file) {
 
     }
 }
