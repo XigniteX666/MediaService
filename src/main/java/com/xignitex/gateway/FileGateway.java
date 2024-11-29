@@ -1,11 +1,9 @@
 package com.xignitex.gateway;
 
-import com.xignitex.model.InternalFile;
-
-import java.io.File;
+import com.xignitex.model.FileDescription;
 
 public interface FileGateway {
-    File getFile(InternalFile file) throws Exception;
+    FileDescription getFile(FileDescription file) throws Exception;
 
-    void putFile(InternalFile file);
+    void putFile(FileDescription file);
 }
