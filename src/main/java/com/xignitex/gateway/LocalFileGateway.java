@@ -28,9 +28,11 @@ public class LocalFileGateway implements FileGateway {
 
             FileUtils.copyFile(originalFile, copiedFile);
 
-            FileDescription outputFile = new FileDescription();
-            outputFile.setFileName(copiedFile.getName());
-            outputFile.setPath(copiedFile.getPath());
+            FileDescription outputFile = FileDescription
+                    .builder()
+                    .fileName(copiedFile.getName())
+                    .path(copiedFile.getPath())
+                    .build();
 
             return outputFile;
         } catch (Exception e) {

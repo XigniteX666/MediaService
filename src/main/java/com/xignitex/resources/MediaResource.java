@@ -1,4 +1,4 @@
-package com.xignitex.controller;
+package com.xignitex.resources;
 
 import com.xignitex.configuration.ApplicationConfig;
 import com.xignitex.model.FileDescription;
@@ -20,13 +20,16 @@ public class MediaResource {
     public String uploadFile(@RestQuery String fileName) {
         //TODO: Validate the input before processing it
 
-        FileDescription file = new FileDescription();
-        file.setFileName(fileName);
-        file.setPath(config.getFileLocationSource());
-
+        FileDescription file = FileDescription
+                .builder()
+                .fileName(fileName)
+                .path((config.getFileLocationSource()))
+                .build();
+        
         uploadFile.execute(file);
         //TODO: create a return object
         return "OK";
     }
+
 
 }
