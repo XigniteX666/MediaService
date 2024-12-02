@@ -2,8 +2,10 @@ package com.xignitex.gateway;
 
 import com.xignitex.model.FileDescription;
 
+import java.io.File;
+
 public interface FileGateway {
     FileDescription getFile(FileDescription file) throws Exception;
 
-    void putFile(FileDescription file);
+    FileDescription putFile(File file) throws Exception;
 }
