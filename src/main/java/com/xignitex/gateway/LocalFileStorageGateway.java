@@ -3,7 +3,6 @@ package com.xignitex.gateway;
 import com.xignitex.configuration.ApplicationConfig;
 import com.xignitex.model.FileDescription;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,12 +10,14 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 
 @ApplicationScoped
-public class LocalFileGateway implements FileGateway {
+public class LocalFileStorageGateway implements StorageGateway {
+    private static final Logger LOGGER = LoggerFactory.getLogger(LocalFileStorageGateway.class);
 
-    @Inject
     ApplicationConfig config;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LocalFileGateway.class);
+    LocalFileStorageGateway(ApplicationConfig config) {
+        this.config = config;
+    }
 
     @Override
     public FileDescription getFile(FileDescription file) throws Exception {
@@ -28,13 +29,13 @@ public class LocalFileGateway implements FileGateway {
 
             FileUtils.copyFile(originalFile, copiedFile);
 
-            FileDescription outputFile = FileDescription
+            return FileDescription
                     .builder()
                     .fileName(copiedFile.getName())
                     .path(copiedFile.getPath())
                     .build();
 
-            return outputFile;
+
         } catch (Exception e) {
             throw new Exception("Unable to get the file");
         }
@@ -48,14 +49,12 @@ public class LocalFileGateway implements FileGateway {
 
             FileUtils.copyFile(file, copiedFile);
 
-            FileDescription downloadedFile = FileDescription
+            return FileDescription
                     .builder()
                     .fileName(copiedFile.getName())
                     .path(copiedFile.getPath())
                     .build();
 
-
-            return downloadedFile;
         } catch (Exception e) {
             throw new Exception("Unable to download the file");
         }

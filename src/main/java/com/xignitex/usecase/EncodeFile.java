@@ -1,10 +1,9 @@
 package com.xignitex.usecase;
 
-import com.xignitex.gateway.FileGateway;
+import com.xignitex.gateway.StorageGateway;
 import com.xignitex.model.FileDescription;
 import com.xignitex.services.VideoConversionService;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,11 +13,13 @@ import org.slf4j.LoggerFactory;
 public class EncodeFile implements UseCase<FileDescription, Void> {
     private static final Logger LOGGER = LoggerFactory.getLogger(EncodeFile.class);
 
-    @Inject
     VideoConversionService fileService;
+    StorageGateway fileRepo;
 
-    @Inject
-    FileGateway fileRepo;
+    EncodeFile(VideoConversionService fileService, StorageGateway fileRepo) {
+        this.fileService = fileService;
+        this.fileRepo = fileRepo;
+    }
 
     @Override
     public Void execute(FileDescription file) {
@@ -30,7 +31,7 @@ public class EncodeFile implements UseCase<FileDescription, Void> {
 
         } catch (Exception e) {
             //TODO: create proper exceptionhandler
-            LOGGER.error("Error occured: " + e.getMessage());
+            LOGGER.error("Error occured: {}", e.getMessage());
             throw new RuntimeException(e);
         }
         return null;
