@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 
 @ApplicationScoped
-public class FileUpload implements UseCase<File, String> {
+public class FileUpload implements UseCase<File, Void> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUpload.class);
 
@@ -22,7 +22,7 @@ public class FileUpload implements UseCase<File, String> {
     FileGateway fileRepo;
 
     @Override
-    public String execute(File file) {
+    public Void execute(File file) {
         try {
             FileDescription copiedFile = fileRepo.putFile(file);
             fileService.encodeFile(copiedFile);
@@ -30,8 +30,7 @@ public class FileUpload implements UseCase<File, String> {
             //TODO: create proper exceptionhandler
             LOGGER.error("Error occured: " + e.getMessage());
             throw new RuntimeException(e);
-
         }
-        return "";
+        return null;
     }
 }
