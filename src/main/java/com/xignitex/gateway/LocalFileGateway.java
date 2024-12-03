@@ -42,7 +42,23 @@ public class LocalFileGateway implements FileGateway {
 
 
     @Override
-    public void putFile(FileDescription file) {
+    public FileDescription putFile(File file) throws Exception {
+        try {
+            File copiedFile = new File(config.getFileLocationTemp() + "upload.mov");
+
+            FileUtils.copyFile(file, copiedFile);
+
+            FileDescription downloadedFile = FileDescription
+                    .builder()
+                    .fileName(copiedFile.getName())
+                    .path(copiedFile.getPath())
+                    .build();
+
+
+            return downloadedFile;
+        } catch (Exception e) {
+            throw new Exception("Unable to download the file");
+        }
 
     }
 }
