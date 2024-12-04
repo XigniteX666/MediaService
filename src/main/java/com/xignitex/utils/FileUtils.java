@@ -9,7 +9,7 @@ public class FileUtils {
     }
 
     //TODO: see if it's possible to create a better solution
-    public static String generateOutpuFileName(String format) {
+    public static String generateRandomFileName(String format) {
         int leftLimit = 48; // numeral '0'
         int rightLimit = 122; // letter 'z'
         int targetStringLength = 10;

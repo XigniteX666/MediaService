@@ -44,8 +44,12 @@ public class LocalFileStorageGateway implements StorageGateway {
 
     @Override
     public FileDescription putFile(File file) throws Exception {
+        String fileName = com.xignitex.utils.FileUtils.generateRandomFileName("tmp");
+        LOGGER.info("Uploading the file {}", config.getFileLocationTemp() + "/" + fileName);
         try {
-            File copiedFile = new File(config.getFileLocationTemp() + "upload.mov");
+
+
+            File copiedFile = new File(config.getFileLocationTemp() + fileName);
 
             FileUtils.copyFile(file, copiedFile);
 

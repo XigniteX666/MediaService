@@ -30,7 +30,7 @@ public class FFMPEGConversionService implements VideoConversionService {
 
     @Override
     public void encodeFile(FileDescription file) {
-        String outputFile = config.getFileLocationTemp() + FileUtils.generateOutpuFileName(videoConfig.getFormat());
+        String outputFile = config.getFileLocationTemp() + FileUtils.generateRandomFileName(videoConfig.getFormat());
         LOGGER.info("encoding file {} to {}", file.getPath(), outputFile);
 
         try {
